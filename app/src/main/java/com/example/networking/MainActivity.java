@@ -14,9 +14,7 @@ import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity {
 
-    private String[] mountainNames = {"Katt","Hund","Kanin"};
-
-    private ArrayList<String> listData = new ArrayList<>(Arrays.asList(mountainNames));
+    private ArrayList<Mountain> listData = new ArrayList<>(Arrays.asList(mountainNames));
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

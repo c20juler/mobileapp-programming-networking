@@ -7,7 +7,9 @@ public class Mountain {
     private String company;
     private String location;
     private String category;
-    private int size;
-    private int cost;
+    @SerializedName("size")
+    private int meters;
+    @SerializedName("cost")
+    private int feet;
     private Auxdata auxdata;
 }
