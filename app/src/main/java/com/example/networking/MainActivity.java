@@ -18,6 +18,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Array;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -25,26 +26,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity {
-
-    /*To do:
-    Add a `ListView` to your layout //DONE
-    Add a `ArrayList<Mountain>` as a member variable in your activity //Convert from String to Mountain (so it refers to the mountain class.../webservice?)
-    Add a `ArrayAdapter<Mountain>` as a member variable in your activity //Convert to a Mountain adapter from String...
-    Use `JsonTask` to fetch data from our json web service
-    Add items to your list of mountains by parsing the json data Hint: use `adapter.notifyDataSetChanged();` from within `onPostExecute(String json)` to notify the adapter that the content of the ArrayList has been updated.
-    Display the names of the mountains in the `ListView` Hint: override `toString()` in your Mountain class
-    When tapping a Mountain name one of three things should happen
-    Display Mountain name and 2 other properties as a Toast View
-    Display Mountain name and 2 other properties as a Snackbar View
-    Display Mountain name and 2 other properties in a separate activity as three separate views
-    Write a short report where you explain the things that you have done
-    */
-
-    /*Remove this (replaced by webservice)*/
-    private String[] mountainNames = {"Matterhorn","Mont Blanc","Denali"};
-
-    /*Convert ArrayList<String> to ArrayList<Mountain>...?*/
-    private ArrayList<String> listData = new ArrayList<>(Arrays.asList(mountainNames));
+    private ArrayList<Mountain> listData;
+    private ArrayAdapter<Mountain> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,17 +36,19 @@ public class MainActivity extends AppCompatActivity {
 
         new JsonTask().execute("https://wwwlab.iit.his.se/brom/kurser/mobilprog/dbservice/admin/getdataasjson.php?type=brom");
 
-        /*Followed dugga "adapter" example tutorial... Must replace ArrayAdapter<String> with ArrayAdapter<Mountain> for dugga 6...- använda json med en type adapter*/
-        ArrayAdapter<String> adapter=new ArrayAdapter<String>(this,R.layout.list_item_textview,R.id.list_item_textview, listData);
+        listData = new ArrayList<>();
+
+        /*Followed dugga "adapter" example tutorial... Must replace ArrayAdapter<String> with ArrayAdapter<Mountain> for dugga 6...*/
+        adapter = new ArrayAdapter<>(this, R.layout.list_item_textview, listData);
+
 
         ListView my_listView=(ListView) findViewById(R.id.list_view);
-
         my_listView.setAdapter(adapter);
-
         my_listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getApplicationContext(), "Det fungerade!", Toast.LENGTH_SHORT).show();
+
+                Toast.makeText(getApplicationContext(),"Det fungerade!", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -111,9 +96,16 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String json) {
             Log.d("TAG ==>", json);
-            /*Continiue writing code here...*/
             Gson gson = new Gson();
+            Mountain[] temporary = gson.fromJson(json,Mountain[].class);
 
+            for (int i = 0; i < temporary.length; i++) {
+                Mountain mountain = temporary[i];
+                Log.d("AsyncTask ==>", "Found a mountain!: "+mountain);
+                listData.add(mountain);
+
+            }
+            adapter.notifyDataSetChanged();
         }
     }
 }
