@@ -48,7 +48,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                Toast.makeText(getApplicationContext(),"Det fungerade!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),"Mountain: "+listData.get(position)+"\nMeters: "+
+                        listData.get(position).getSize()+"\nFeet: "+ listData.get(position).getCost(), Toast.LENGTH_SHORT).show();
+
             }
         });
 
