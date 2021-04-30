@@ -37,20 +37,14 @@ public class MainActivity extends AppCompatActivity {
         new JsonTask().execute("https://wwwlab.iit.his.se/brom/kurser/mobilprog/dbservice/admin/getdataasjson.php?type=brom");
 
         listData = new ArrayList<>();
-
-        /*Followed dugga "adapter" example tutorial... Must replace ArrayAdapter<String> with ArrayAdapter<Mountain> for dugga 6...*/
         adapter = new ArrayAdapter<>(this, R.layout.list_item_textview, listData);
-
 
         ListView my_listView=(ListView) findViewById(R.id.list_view);
         my_listView.setAdapter(adapter);
         my_listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                Toast.makeText(getApplicationContext(),"Mountain: "+listData.get(position)+"\nMeters: "+
-                        listData.get(position).getSize()+"\nFeet: "+ listData.get(position).getCost(), Toast.LENGTH_SHORT).show();
-
+                Toast.makeText(getApplicationContext(),listData.get(position).getToastMsg(), Toast.LENGTH_SHORT).show();
             }
         });
 

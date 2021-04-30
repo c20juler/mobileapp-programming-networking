@@ -27,4 +27,8 @@ public class Mountain {
     public String toString() {
         return name;
     }
+
+    public String getToastMsg() {
+        return "Mountain: "+name+"\nMeters: "+size+"\nFeet: "+cost;
+    }
 }
