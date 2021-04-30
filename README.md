@@ -139,7 +139,7 @@ Om man då klickar på ett item så undersöks positionen i listData för vilket
 Därefter körs metoden getToastMsg() som i ett toast meddelande skriver ut data om det berg man klickat på.    
 
 
-##Screenshot på färdig applikation
+## Screenshot på färdig applikation
 
 <img src="Screenshot_1619700249.png" width="400">
 
